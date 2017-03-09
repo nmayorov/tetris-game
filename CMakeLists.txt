@@ -8,11 +8,11 @@ find_package(OpenGL REQUIRED)
 include_directories(/usr/local/include/freetype2/)
 
 set(SOURCE_FILES
-    tetris/game.cpp
-    tetris/tetris.h tetris/tetris.cpp
-    tetris/render.h tetris/render.cpp 
-    tetris/util.h tetris/util.cpp
-    tetris/stb_image.h)
+    src/game.cpp
+    src/tetris.h src/tetris.cpp
+    src/render.h src/render.cpp
+    src/util.h src/util.cpp
+    src/stb_image.h)
 
 add_executable(tetris ${SOURCE_FILES})
 target_link_libraries(tetris ${OPENGL_gl_LIBRARY} glfw freetype)
