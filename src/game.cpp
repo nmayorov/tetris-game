@@ -116,10 +116,8 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
                 gameState = kGameStart;
             break;
         case kGameOver:
-            if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
+            if (key == GLFW_KEY_ENTER && action == GLFW_PRESS)
                 gameState = kGameStart;
-                tetris->restart(startLevel);
-            }
             break;
         case kGameStart:
             if (key == GLFW_KEY_ENTER && action == GLFW_PRESS) {
@@ -230,24 +228,32 @@ int main() {
                         std::round(kHudY + 2 * kHudPieceBoxHeight + 1.5f * letterHeight),
                         kHudWidth, kHudPieceBoxHeight);
             }
+    
+            int level, linesCleared, score;
+            if (gameState == kGameStart) {
+                level = startLevel;
+                linesCleared = 0;
+                score = 0;
+            } else {
+                level = tetris->level();
+                linesCleared = tetris->linesCleared();
+                score = tetris->score();
+            }
             
             GLfloat y = 0.6f * kHeight;
             textRenderer.renderCentered("LEVEL", kHudX, y, kHudWidth, kColorBlack);
             y += 1.4 * letterHeight;
-            if (gameState == kGameStart)
-                textRenderer.renderCentered(std::to_string(startLevel), kHudX, y, kHudWidth, kColorBlack);
-            else
-                textRenderer.renderCentered(std::to_string(tetris->level()), kHudX, y, kHudWidth, kColorBlack);
+            textRenderer.renderCentered(std::to_string(level), kHudX, y, kHudWidth, kColorBlack);
             
             y += 2.5 * letterHeight;
             textRenderer.renderCentered("LINES", kHudX, y, kHudWidth, kColorBlack);
             y += 1.4 * letterHeight;
-            textRenderer.renderCentered(std::to_string(tetris->linesCleared()), kHudX, y, kHudWidth, kColorBlack);
+            textRenderer.renderCentered(std::to_string(linesCleared), kHudX, y, kHudWidth, kColorBlack);
             
             y += 2.5 * letterHeight;
             textRenderer.renderCentered("SCORE", kHudX, y, kHudWidth, kColorBlack);
             y += 1.4 * letterHeight;
-            textRenderer.renderCentered(std::to_string(tetris->score()), kHudX, y, kHudWidth, kColorBlack);
+            textRenderer.renderCentered(std::to_string(score), kHudX, y, kHudWidth, kColorBlack);
     
             boardRenderer.renderBackground();
             
