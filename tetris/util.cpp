@@ -6,7 +6,6 @@
 #include "util.h"
 
 #include <ft2build.h>
-#include <sstream>
 #include FT_FREETYPE_H
 
 #define STB_IMAGE_IMPLEMENTATION
@@ -103,4 +102,3 @@ std::map<GLubyte, Glyph> loadFont(const char* path, unsigned int glyphHeight) {
     
     return characters;
 }
-

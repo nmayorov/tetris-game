@@ -1,6 +1,6 @@
-#include <iostream>
-#include <vector>
 #include <map>
+#include <string>
+#include <vector>
 #include <glm/gtc/matrix_transform.hpp>
 #include "render.h"
 
@@ -12,14 +12,14 @@ const GLfloat kBoardWidth = kBoardNumCols * kTileSize;
 const GLfloat kBoardHeight = kBoardNumRows * kTileSize;
 const GLfloat kMargin = 10;
 const GLfloat kHudWidth = 160;
-const GLfloat kWidth = 3 * kMargin + kBoardWidth + kHudWidth;
-const GLfloat kHeight = 2 * kMargin + kBoardHeight;
+const GLint kWidth = 3 * kMargin + kBoardWidth + kHudWidth;
+const GLint kHeight = 2 * kMargin + kBoardHeight;
 const GLfloat kHudX = kMargin;
 const GLfloat kHudY = kMargin;
 const GLfloat kBoardX = 2 * kMargin + kHudWidth;
 const GLfloat kBoardY = kMargin;
 const GLfloat kHudPieceBoxHeight = 2.5f * kTileSize;
-const unsigned int kFontSize = 18;
+const GLuint kFontSize = 18;
 
 
 const double kGameTimeStep = 0.005;
@@ -52,13 +52,16 @@ GLFWwindow* setupGlContext() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
     GLFWwindow *window = glfwCreateWindow(kWidth, kHeight, "TETRIS", nullptr, nullptr);
     
-    glfwMakeContextCurrent(window);
-    
     if (window == nullptr)
         glfwTerminate();
-    
-    glfwMakeContextCurrent(window);
-    
+
+	glfwMakeContextCurrent(window);
+
+#if defined(WIN32)
+	glewExperimental = GL_TRUE;
+	glewInit();
+#endif
+
     return window;
 }
 
@@ -142,13 +145,13 @@ void windowFocusCallback(GLFWwindow* window, int focused) {
 
 int main() {
     GLFWwindow* window = setupGlContext();
-
-    if (window == nullptr)
+    
+	if (window == nullptr)
         return EXIT_FAILURE;
     
-    auto font = loadFont("resources/kenvector_future.ttf", kFontSize);
+    auto font = loadFont("resources/kenvector_future.ttf", kFontSize);    
     
-    std::map<TileColor, Texture> tileTextures, ghostTextures;
+	std::map<TileColor, Texture> tileTextures, ghostTextures;
     std::vector<std::string> colors = {"cyan", "blue", "orange", "yellow", "green", "purple", "red"};
     for (int color = kCyan; color <= kRed; ++color) {
         std::string path = "resources/tile_" + colors[color] + ".png";
@@ -195,7 +198,7 @@ int main() {
     
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-        
+    
         if (gameState == kGameRun) {
             double time = glfwGetTime();
             if (time - timeLastGameUpdate >= kGameTimeStep) {
@@ -378,11 +381,6 @@ int main() {
                     textRenderer.render("TO", x, y, kColorWhite);
                     y += 3.5 * letterHeight;
                     textRenderer.renderCentered("CONTINUE", kBoardX, y, kBoardWidth, kColorWhite);
-
-                    
-//                    y = kBoardY + 0.42f * kBoardHeight;
-//                    textRenderer.renderCentered("PRESS ANY KEY", 2 * kMargin + kHudWidth, y, kBoardWidth,
-//                                                kColorWhite);
                 }
             }
             glfwSwapBuffers(window);

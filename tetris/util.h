@@ -1,7 +1,11 @@
 #ifndef TETRIS_UTIL_H
 #define TETRIS_UTIL_H
 
+#if defined(__APPLE__)
 #include <OpenGL/gl3.h>
+#else
+#include <GL/glew.h>
+#endif
 #include "glm/glm.hpp"
 #include <glm/gtc/type_ptr.hpp>
 

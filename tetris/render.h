@@ -5,7 +5,12 @@
 #include <map>
 #include <vector>
 
+#if defined(__APPLE__)
 #define GLFW_INCLUDE_GLCOREARB
+#else 
+#define GLEW_STATIC
+#include <GL/glew.h>
+#endif
 #include <GLFW/glfw3.h>
 
 #include <glm/glm.hpp>
@@ -85,7 +90,7 @@ public:
     void render(const std::string &text, GLfloat x, GLfloat y, glm::vec3 color) const;
     void renderCentered(const std::string& text, GLfloat x, GLfloat y, GLfloat width, const glm::vec3& color) const;
     
-    GLuint computeWidth(const std::string &text) const;
+    GLint computeWidth(const std::string &text) const;
     GLint computeHeight(const std::string &text) const;
     
 private:

@@ -1,4 +1,6 @@
 #include "render.h"
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 
 const char* kColoredPrimitiveVs = R"glsl(
@@ -291,14 +293,14 @@ void BoardRenderer::renderPiece(const Piece &piece, int row, int col, double loc
     int startRow = std::max(0, -row);
     GLfloat mixCoeff = 0.5f * sin(M_PI_2 * lockPercent);
     pieceRenderer_.renderShape(piece, x_ + col * tileSize_, y_ + row * tileSize_,
-                               mixCoeff, glm::vec3(0, 0, 0), alphaMultiplier, startRow);
+                               mixCoeff, kColorBlack, alphaMultiplier, startRow);
 }
 
 
 void BoardRenderer::renderGhost(const Piece &piece, int ghostRow, int col) const {
     int startRow = std::max(0, -ghostRow);
     ghostRenderer_.renderShape(piece, x_ + col * tileSize_, y_ + ghostRow * tileSize_,
-                               0, glm::vec3(0, 0, 0), 0.7, startRow);
+                               0, kColorBlack, 0.7, startRow);
 }
 
 
@@ -388,8 +390,8 @@ void TextRenderer::renderCentered(const std::string& text, GLfloat x, GLfloat y,
 }
 
 
-GLuint TextRenderer::computeWidth(const std::string& text) const {
-    GLuint width = 0;
+GLint TextRenderer::computeWidth(const std::string& text) const {
+    GLint width = 0;
     for (auto c = text.begin(); c != text.end() - 1; ++c) {
         width += font_.at(*c).advance;
     }
@@ -407,4 +409,3 @@ GLint TextRenderer::computeHeight(const std::string& text) const {
     }
     return height;
 }
-
