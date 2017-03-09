@@ -1,3 +1,6 @@
 cmake-build-*
 .DS_store
 .idea
+vs2017_project/Debug
+vs2017_project/Release
+vs2017_project/.vs
