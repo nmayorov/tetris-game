@@ -15,30 +15,30 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\tetris\game.cpp">
+    <ClCompile Include="..\src\game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\tetris\render.cpp">
+    <ClCompile Include="..\src\render.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\tetris\tetris.cpp">
+    <ClCompile Include="..\src\tetris.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\tetris\util.cpp">
+    <ClCompile Include="..\src\util.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\tetris\render.h">
+    <ClInclude Include="..\src\render.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\tetris\stb_image.h">
+    <ClInclude Include="..\src\stb_image.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\tetris\tetris.h">
+    <ClInclude Include="..\src\tetris.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\tetris\util.h">
+    <ClInclude Include="..\src\util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

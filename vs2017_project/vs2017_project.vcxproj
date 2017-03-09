@@ -18,6 +18,18 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\game.cpp" />
+    <ClCompile Include="..\src\render.cpp" />
+    <ClCompile Include="..\src\tetris.cpp" />
+    <ClCompile Include="..\src\util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\render.h" />
+    <ClInclude Include="..\src\stb_image.h" />
+    <ClInclude Include="..\src\tetris.h" />
+    <ClInclude Include="..\src\util.h" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{AF694117-A2DD-462E-BCE5-8A679B0E8542}</ProjectGuid>
@@ -152,18 +164,6 @@
       <EntryPointSymbol>mainCRTStartup</EntryPointSymbol>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\tetris\game.cpp" />
-    <ClCompile Include="..\tetris\render.cpp" />
-    <ClCompile Include="..\tetris\tetris.cpp" />
-    <ClCompile Include="..\tetris\util.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\tetris\render.h" />
-    <ClInclude Include="..\tetris\stb_image.h" />
-    <ClInclude Include="..\tetris\tetris.h" />
-    <ClInclude Include="..\tetris\util.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
