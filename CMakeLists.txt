@@ -16,6 +16,10 @@ include_directories(${GLFW_INCLUDE_DIRS})
 include_directories(${FREETYPE_INCLUDE_DIRS})
 include_directories(${GLM_INCLUDE_DIRS})
 
+# pkg_search_module doesn't provide a full path to a library,
+# without with line xcode project (for example) won't build.
+link_directories(${GLFW_LIBRARY_DIRS})
+
 set(SOURCE_FILES
     src/game.cpp
     src/tetris.h src/tetris.cpp
