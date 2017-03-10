@@ -393,10 +393,10 @@ void Tetris::restart(int level) {
     linesCleared_ = 0;
     score_ = 0;
     canHold_ = true;
-	motion_ = Motion::kNone;
+    motion_ = Motion::kNone;
     moveLeftPrev_ = false;
     moveRightPrev_ = false;
-	moveDownTimer_ = 0;
+    moveDownTimer_ = 0;
     moveRepeatTimer_ = 0;
     moveRepeatDelayTimer_ = 0;
     
