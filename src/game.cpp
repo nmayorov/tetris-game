@@ -12,8 +12,8 @@ const GLfloat kBoardWidth = kBoardNumCols * kTileSize;
 const GLfloat kBoardHeight = kBoardNumRows * kTileSize;
 const GLfloat kMargin = 10;
 const GLfloat kHudWidth = 160;
-const GLint kWidth = 3 * kMargin + kBoardWidth + kHudWidth;
-const GLint kHeight = 2 * kMargin + kBoardHeight;
+const GLfloat kWidth = 3 * kMargin + kBoardWidth + kHudWidth;
+const GLfloat kHeight = 2 * kMargin + kBoardHeight;
 const GLfloat kHudX = kMargin;
 const GLfloat kHudY = kMargin;
 const GLfloat kBoardX = 2 * kMargin + kHudWidth;
@@ -105,7 +105,6 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
                         break;
                     case GLFW_KEY_DOWN:
                         softDrop = false;
-                        break;
                 }
             }
             break;
@@ -172,8 +171,7 @@ int main() {
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     
-    glm::mat4 projection = glm::ortho(0.0f, static_cast<GLfloat>(kWidth), static_cast<GLfloat>(kHeight),
-                                      0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, kWidth, kHeight, 0.0f, -1.0f, 1.0f);
     
     tetris = new Tetris(board, kGameTimeStep, static_cast<unsigned int>(glfwGetTime() * 1e4));
     

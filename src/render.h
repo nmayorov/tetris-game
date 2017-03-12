@@ -25,10 +25,10 @@ extern const glm::vec3 kColorWhite;
 
 class SpriteRenderer {
 public:
-    SpriteRenderer(const glm::mat4 projection);
+    SpriteRenderer(const glm::mat4& projection);
     
     void render(const Texture &texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLfloat mixCoeff = 0,
-                const glm::vec3 &mixColor = kColorBlack, GLfloat alphaMultiplier = 1);
+                const glm::vec3& mixColor = kColorBlack, GLfloat alphaMultiplier = 1);
     
 private:
     Shader shader_;
@@ -38,14 +38,12 @@ private:
 
 class PieceRenderer {
 public:
-    PieceRenderer(GLfloat tileSize, const std::map<TileColor, Texture> textures,
-                  SpriteRenderer& spriteRenderer) : tileSize_(tileSize),
-                                                    textures_(textures),
-                                                    spriteRenderer_(spriteRenderer)  {}
+    PieceRenderer(GLfloat tileSize, const std::map<TileColor, Texture>& textures, SpriteRenderer& spriteRenderer)
+            : tileSize_(tileSize), textures_(textures), spriteRenderer_(spriteRenderer)  {}
     
     void renderShape(const Piece &piece, GLfloat x, GLfloat y, GLfloat mixCoeff = 0,
                      const glm::vec3& mixColor = kColorBlack, GLfloat alphaMultiplier = 1, int startRow = 0) const;
-    void renderInitialShape(const Piece &piece, GLfloat x, GLfloat y) const;
+    void renderInitialShape(const Piece& piece, GLfloat x, GLfloat y) const;
     void renderInitialShapeCentered(const Piece& piece, GLfloat x, GLfloat y, GLfloat width, GLfloat height) const;
 
 private:
@@ -58,7 +56,7 @@ private:
 class BoardRenderer {
 public:
     BoardRenderer(const glm::mat4& projection, GLfloat tileSize, GLfloat x, GLfloat y,
-                  int nRows, int nCols, const std::map<TileColor, Texture> tileTextures,
+                  int nRows, int nCols, const std::map<TileColor, Texture>& tileTextures,
                   SpriteRenderer& spriteRenderer, PieceRenderer& pieceRenderer, PieceRenderer& ghostRenderer);
     
     void renderBackground() const;
@@ -85,13 +83,13 @@ private:
 
 class TextRenderer {
 public:
-    TextRenderer(glm::mat4 projection, const std::map<GLubyte, Glyph>& font);
+    TextRenderer(const glm::mat4& projection, const std::map<GLubyte, Glyph>& font);
     
-    void render(const std::string &text, GLfloat x, GLfloat y, glm::vec3 color) const;
+    void render(const std::string& text, GLfloat x, GLfloat y, glm::vec3 color) const;
     void renderCentered(const std::string& text, GLfloat x, GLfloat y, GLfloat width, const glm::vec3& color) const;
     
-    GLint computeWidth(const std::string &text) const;
-    GLint computeHeight(const std::string &text) const;
+    GLint computeWidth(const std::string& text) const;
+    GLint computeHeight(const std::string& text) const;
     
 private:
     std::map<GLubyte, Glyph> font_;

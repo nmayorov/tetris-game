@@ -123,7 +123,6 @@ Piece::Piece(PieceKind kind) : kind_(kind), color_(static_cast<TileColor>(kind))
         kicksRight_ = kKicksOtherRight_;
         kicksLeft_ = kicksOtherLeft_;
     }
-    
 }
 
 
@@ -161,7 +160,7 @@ void Piece::rotate(Rotation rotation) {
 }
 
 
-const std::vector<std::pair<int, int>> Piece::kicks(Rotation rotation) {
+const std::vector<std::pair<int, int>> Piece::kicks(Rotation rotation) const {
     switch (rotation) {
         case Rotation::kRight:
             return kicksRight_[state_];
@@ -212,16 +211,13 @@ bool Board::spawnPiece(PieceKind kind) {
     if (!isPositionPossible(row_, col_, piece_))
         return false;
     
-    int maxMoveDown = 2;
-    if (kind == kPieceI)
-        maxMoveDown = 1;
-    
+    int maxMoveDown = kind == kPieceI ? 1 : 2;
     for (int moveDown = 0; moveDown < maxMoveDown; ++moveDown) {
         if (!isPositionPossible(row_ + 1, col_, piece_))
             break;
         ++row_;
     }
-    findGhostRow();
+    updateGhostRow();
     return true;
 }
 
@@ -229,7 +225,7 @@ bool Board::spawnPiece(PieceKind kind) {
 bool Board::moveHorizontal(int dCol) {
     if (isPositionPossible(row_, col_ + dCol, piece_)) {
         col_ += dCol;
-        findGhostRow();
+        updateGhostRow();
         return true;
     }
     
@@ -261,7 +257,7 @@ bool Board::rotate(Rotation rotation) {
             piece_ = testPiece;
             row_ += dRow;
             col_ += dCol;
-            findGhostRow();
+            updateGhostRow();
             return true;
         }
             
@@ -321,7 +317,7 @@ bool Board::isPositionPossible(int row, int col, const Piece &piece) const {
 }
 
 
-void Board::findGhostRow() {
+void Board::updateGhostRow() {
     ghostRow_ = row_;
     while (isPositionPossible(ghostRow_ + 1, col_, piece_))
         ++ghostRow_;
@@ -358,7 +354,7 @@ void Board::findLinesToClear() {
         }
     }
     
-    std::fill(tiles_.begin(), tiles_.begin() + linesCleared * nCols, kEmpty);
+    std::fill(tilesAfterClear_.begin(), tilesAfterClear_.begin() + linesCleared * nCols, kEmpty);
 }
 
 
@@ -401,9 +397,9 @@ void Tetris::restart(int level) {
     moveRepeatDelayTimer_ = 0;
     
     isOnGround_ = false;
-    timeLocking_ = 0;
-    pausedForLineClear_ = false;
-    lineClearTimer_ = 0;
+    lockingTimer_ = 0;
+    pausedForLinesClear_ = false;
+    linesClearTimer_ = 0;
     
     std::shuffle(bag_.begin(), bag_.begin() + kNumPieces, rng_);
     std::shuffle(bag_.begin() + kNumPieces, bag_.end(), rng_);
@@ -416,16 +412,16 @@ void Tetris::restart(int level) {
 
 
 void Tetris::update(bool softDrop, bool moveRight, bool moveLeft) {
-    if (pausedForLineClear_) {
-        lineClearTimer_ += timeStep_;
+    if (pausedForLinesClear_) {
+        linesClearTimer_ += timeStep_;
         
-        if (lineClearTimer_ < kPauseAfterLineClear_)
+        if (linesClearTimer_ < kPauseAfterLineClear_)
             return;
     
         updateScore(board_.numLinesToClear());
         board_.clearLines();
         spawnPiece();
-        pausedForLineClear_ = false;
+        pausedForLinesClear_ = false;
     }
     
     moveDownTimer_ += timeStep_;
@@ -433,9 +429,9 @@ void Tetris::update(bool softDrop, bool moveRight, bool moveLeft) {
     moveRepeatDelayTimer_ += timeStep_;
     
     if (isOnGround_)
-        timeLocking_ += timeStep_;
+        lockingTimer_ += timeStep_;
     else
-        timeLocking_ = 0;
+        lockingTimer_ = 0;
     
     bool moveLeftInput = moveLeft;
     bool moveRightInput = moveRight;
@@ -491,16 +487,16 @@ void Tetris::update(bool softDrop, bool moveRight, bool moveLeft) {
 
 void Tetris::moveHorizontal(int dCol) {
     if (board_.moveHorizontal(dCol) && isOnGround_) {
-        timeLocking_ = 0;
-        movesLocking_ += 1;
+        lockingTimer_ = 0;
+        nMovesWhileLocking_ += 1;
     }
 }
 
 
 void Tetris::rotate(Rotation rotation) {
     if (board_.rotate(rotation) && isOnGround_) {
-        timeLocking_ = 0;
-        movesLocking_ += 1;
+        lockingTimer_ = 0;
+        nMovesWhileLocking_ += 1;
     }
     
     checkLock();
@@ -514,7 +510,7 @@ void Tetris::hardDrop() {
 
 
 void Tetris::hold() {
-    if (!canHold_ || pausedForLineClear_)
+    if (!canHold_ || pausedForLinesClear_)
         return;
     
     Piece currentPiece = board_.piece();
@@ -533,13 +529,13 @@ void Tetris::checkLock() {
     
     isOnGround_ = true;
     
-    if (timeLocking_ >= kLockDownTimeLimit_ || movesLocking_ >= kLockDownMovesLimit_)
+    if (lockingTimer_ >= kLockDownTimeLimit_ || nMovesWhileLocking_ >= kLockDownMovesLimit_)
         lock();
 }
 
 
 void Tetris::lock() {
-    timeLocking_ = 0;
+    lockingTimer_ = 0;
     isOnGround_ = false;
     canHold_ = true;
     
@@ -553,8 +549,8 @@ void Tetris::lock() {
         return;
     }
     
-    pausedForLineClear_ = true;
-    lineClearTimer_ = 0;
+    pausedForLinesClear_ = true;
+    linesClearTimer_ = 0;
 }
 
 
@@ -566,7 +562,7 @@ void Tetris::spawnPiece() {
         std::shuffle(bag_.begin() + kNumPieces, bag_.end(), rng_);
         nextPiece_ = 0;
     }
-    movesLocking_ = 0;
+    nMovesWhileLocking_ = 0;
 }
 
 
@@ -587,7 +583,7 @@ void Tetris::updateScore(int linesCleared) {
             deltaScore = 800;
             break;
         default:
-            break;
+            assert(false);
     }
     linesCleared_ += linesCleared;
     score_ += deltaScore * level_;

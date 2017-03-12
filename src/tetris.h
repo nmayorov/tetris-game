@@ -8,11 +8,12 @@
 #include <iostream>
 
 
-enum TileColor{kEmpty = -1, kCyan, kBlue, kOrange, kYellow, kGreen, kPurple, kRed};
-enum PieceKind{kNone = -1, kPieceI=0, kPieceJ, kPieceL, kPieceO, kPieceS, kPieceT, kPieceZ};
-enum class Rotation {kRight, kLeft};
-
 const int kNumPieces = 7;
+
+enum TileColor{kEmpty = -1, kCyan, kBlue, kOrange, kYellow, kGreen, kPurple, kRed};
+enum PieceKind{kNone = -1, kPieceI, kPieceJ, kPieceL, kPieceO, kPieceS, kPieceT, kPieceZ};
+enum class Rotation {kRight, kLeft};
+enum class Motion {kNone, kRight, kLeft};
 
 
 class Piece {
@@ -29,8 +30,7 @@ public:
     const std::vector<TileColor>& initialShape() const { return initialShape_; }
     
     void rotate(Rotation rotation);
-    const std::vector<std::pair<int, int>> kicks(Rotation rotation);
-    
+    const std::vector<std::pair<int, int>> kicks(Rotation rotation) const;
     
 private:
     static const int kNumStates_ = 4;
@@ -83,8 +83,6 @@ public:
     
 private:
     static const int kRowsAbove_;
-    static const int wallKickRowShiftsCommon_[3];
-    static const int wallKickRowShiftsI_[2];
     
     std::vector<TileColor> tiles_;
     
@@ -98,12 +96,10 @@ private:
     void setTile(int row, int col, TileColor color);
     bool isTileFilled(int row, int col) const;
     bool isPositionPossible(int row, int col, const Piece &piece) const;
-    void findGhostRow();
+    void updateGhostRow();
     void findLinesToClear();
 };
 
-
-enum class Motion {kNone, kRight, kLeft};
 
 
 class Tetris {
@@ -118,9 +114,9 @@ public:
     void hardDrop();
     void hold();
     
-    double lockPercent() const { return timeLocking_ / kLockDownTimeLimit_; }
-    bool isPausedForLineClear() const { return pausedForLineClear_; }
-    double lineClearPausePercent() const { return lineClearTimer_ / kPauseAfterLineClear_; }
+    double lockPercent() const { return lockingTimer_ / kLockDownTimeLimit_; }
+    bool isPausedForLineClear() const { return pausedForLinesClear_; }
+    double lineClearPausePercent() const { return linesClearTimer_ / kPauseAfterLineClear_; }
     
     int level() const { return level_; }
     int linesCleared() const { return linesCleared_; }
@@ -163,11 +159,11 @@ private:
     double moveRepeatTimer_;
     
     bool isOnGround_;
-    double timeLocking_;
-    int movesLocking_;
+    double lockingTimer_;
+    int nMovesWhileLocking_;
     
-    bool pausedForLineClear_;
-    double lineClearTimer_;
+    bool pausedForLinesClear_;
+    double linesClearTimer_;
     
     void moveHorizontal(int dCol);
     void checkLock();
@@ -175,7 +171,7 @@ private:
     void spawnPiece();
     void updateScore(int linesCleared);
     
-    double secondsPerLineForLevel(int level) { return std::pow(0.8 - (level - 1) * 0.007, level - 1); }
+    double secondsPerLineForLevel(int level) const { return std::pow(0.8 - (level - 1) * 0.007, level - 1); }
 };
 
 #endif //TETRIS_TETRIS_H

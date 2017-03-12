@@ -74,12 +74,12 @@ Texture::Texture(GLenum format, GLuint width, GLuint height, GLubyte* image) : w
 }
 
 
-std::map<GLubyte, Glyph> loadFont(const char* path, unsigned int glyphHeight) {
+std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHeight) {
     FT_Library ft;
     FT_Init_FreeType(&ft);
     
     FT_Face face;
-    FT_New_Face(ft, path, 0, &face);
+    FT_New_Face(ft, path.c_str(), 0, &face);
     
     FT_Set_Pixel_Sizes(face, 0, glyphHeight);
     

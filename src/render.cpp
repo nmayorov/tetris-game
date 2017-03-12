@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-const char* kColoredPrimitiveVs = R"glsl(
+const char* kColoredPrimitiveVertexShader = R"glsl(
 # version 330 core
 
 layout (location = 0) in vec2 position;
@@ -17,7 +17,7 @@ void main() {
 
 
 
-const char* kColoredPrimitiveFs = R"glsl(
+const char* kColoredPrimitiveFragmentShader = R"glsl(
 # version 330 core
 
 uniform vec3 inColor;
@@ -30,7 +30,7 @@ void main() {
 )glsl";
 
 
-const char* kTileShaderV = R"glsl(
+const char* kTileVertexShader = R"glsl(
 # version 330 core
 
 layout (location = 0) in vec2 position;
@@ -49,7 +49,7 @@ void main() {
 )glsl";
 
 
-const char* kTileShaderF = R"glsl(
+const char* kTileFragmentShader = R"glsl(
 
 # version 330 core
 
@@ -69,7 +69,7 @@ void main() {
 )glsl";
 
 
-const char* kGlyphVs = R"glsl(
+const char* kGlyphVertexShader = R"glsl(
 
 #version 330 core
 
@@ -88,7 +88,7 @@ void main() {
 )glsl";
 
 
-const char* kGlyphFs = R"glsl(
+const char* kGlyphFragmentShader = R"glsl(
 
 #version 330 core
 
@@ -110,7 +110,7 @@ const glm::vec3 kColorBlack(0, 0, 0);
 const glm::vec3 kColorWhite(1, 1, 1);
 
 
-SpriteRenderer::SpriteRenderer(const glm::mat4 projection) : shader_(kTileShaderV, kTileShaderF) {
+SpriteRenderer::SpriteRenderer(const glm::mat4& projection) : shader_(kTileVertexShader, kTileFragmentShader) {
     GLfloat vertices[] = {0, 0, 0, 1,
                           0, 1, 0, 0,
                           1, 0, 1, 1,
@@ -134,8 +134,8 @@ SpriteRenderer::SpriteRenderer(const glm::mat4 projection) : shader_(kTileShader
 }
 
 
-void SpriteRenderer::render(const Texture &texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height,
-                            GLfloat mixCoeff, const glm::vec3 &mixColor, GLfloat alphaMultiplier) {
+void SpriteRenderer::render(const Texture& texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height,
+                            GLfloat mixCoeff, const glm::vec3& mixColor, GLfloat alphaMultiplier) {
     texture.bind();
     shader_.use();
     shader_.setVec2("shift", glm::vec2(x, y));
@@ -205,14 +205,14 @@ const glm::vec3 kGridColor(0.2, 0.2, 0.2);
 
 
 BoardRenderer::BoardRenderer(const glm::mat4& projection, GLfloat tileSize, GLfloat x, GLfloat y,
-                             int nRows, int nCols, const std::map<TileColor, Texture> tileTextures,
+                             int nRows, int nCols, const std::map<TileColor, Texture>& tileTextures,
                              SpriteRenderer &spriteRenderer, PieceRenderer &pieceRenderer, PieceRenderer &ghostRenderer)
         : tileSize_(tileSize),
           x_(x), y_(y),
           nRows_(nRows), nCols_(nCols),
           tileTextures_(tileTextures),
           pieceRenderer_(pieceRenderer), ghostRenderer_(ghostRenderer), spriteRenderer_(spriteRenderer),
-          backgroundShader_(kColoredPrimitiveVs, kColoredPrimitiveFs) {
+          backgroundShader_(kColoredPrimitiveVertexShader, kColoredPrimitiveFragmentShader) {
     backgroundShader_.use();
     backgroundShader_.setMat4("projection", projection);
     
@@ -330,8 +330,8 @@ void BoardRenderer::playLinesClearAnimation(const Board &board, double percentFi
 }
 
 
-TextRenderer::TextRenderer(glm::mat4 projection, const std::map<GLubyte, Glyph>& font) :
-        font_(font), shader_(kGlyphVs, kGlyphFs) {
+TextRenderer::TextRenderer(const glm::mat4& projection, const std::map<GLubyte, Glyph>& font) :
+        font_(font), shader_(kGlyphVertexShader, kGlyphFragmentShader) {
     shader_.use();
     shader_.setMat4("projection", projection);
     
