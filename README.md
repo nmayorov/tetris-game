@@ -28,6 +28,6 @@ Credits
 
 http://learnopengl.com was amazingly helpful to learn basics of OpenGL. Some utility code was based on samples from there.
 
-Tile sprites are from "Puzzle Pack" by kenney.nl.
+Tile sprites and font by kenney.nl.
 
-Keyboard keys sprites are by Xelu.
+Keyboard key sprites by Xelu. 
