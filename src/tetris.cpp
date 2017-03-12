@@ -359,6 +359,7 @@ void Board::findLinesToClear() {
 
 
 const int Tetris::kLinesToClearPerLevel_ = 10;
+const int Tetris::kMaxLevel_ = 15;
 const double Tetris::kMoveDelay_ = 0.05;
 const double Tetris::kMoveRepeatDelay_ = 0.15;
 const double Tetris::kSoftDropSpeedFactor_ = 20;
@@ -587,7 +588,7 @@ void Tetris::updateScore(int linesCleared) {
     }
     linesCleared_ += linesCleared;
     score_ += deltaScore * level_;
-    if (linesCleared_ >= kLinesToClearPerLevel_ * level_) {
+    if (level_ < kMaxLevel_ && linesCleared_ >= kLinesToClearPerLevel_ * level_) {
         ++level_;
         secondsPerLine_ = secondsPerLineForLevel(level_);
     }

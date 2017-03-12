@@ -126,6 +126,7 @@ public:
     
 private:
     static const int kLinesToClearPerLevel_;
+    static const int kMaxLevel_;
     static const double kMoveDelay_;
     static const double kMoveRepeatDelay_;
     static const double kSoftDropSpeedFactor_;
