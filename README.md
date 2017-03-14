@@ -1,9 +1,9 @@
-A simple tetris game implemented for self-education purposes.
+A simple tetris game implemented for self-education purposes. Here is a [link](https://youtu.be/-8teaOoZdxA) to a video with gameplay for illustration.
 
 Code organization
 -----------------
 
-The game logic is implemented in `tetris.cpp`. 
+The game logic is implemented in `tetris.cpp`. The exact game rules and mechanics are figured from several wikis about Tetris.
 
 Class `Piece` represents a game piece ("tetrimino"), it defines how a piece rotates and kicks off obstacles. 
 
