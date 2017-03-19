@@ -33,7 +33,7 @@ public:
     const std::vector<std::pair<int, int>> kicks(Rotation rotation) const;
     
 private:
-    static const int kNumStates_ = 4;
+    static const int kNumStates_;
     static const std::vector<std::vector<std::pair<int, int>>> kKicksIRight_, kKicksILeft_;
     static const std::vector<std::vector<std::pair<int, int>>> kKicksOtherRight_, kicksOtherLeft_;
     

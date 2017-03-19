@@ -1,6 +1,9 @@
 #include "tetris.h"
 
 
+const int Piece::kNumStates_ = 4;
+
+
 const std::vector<std::vector<std::pair<int, int>>> Piece::kKicksIRight_ = {
     { {0, 0}, {0, -2}, {0, 1}, {1, -2}, {-2, 1} },
     { {0, 0}, {0, -1}, {0, 2}, {-2, -1}, {1, 2} },
@@ -33,8 +36,7 @@ const std::vector<std::vector<std::pair<int, int>>> Piece::kicksOtherLeft_ = {
 };
 
 
-Piece::Piece(PieceKind kind) : kind_(kind), color_(static_cast<TileColor>(kind)), state_(0),
-                               kicksRight_(kNumStates_), kicksLeft_(kNumStates_) {
+Piece::Piece(PieceKind kind) : kind_(kind), color_(static_cast<TileColor>(kind)), state_(0) {
     TileColor e = kEmpty;
     TileColor c = color_;
     switch (kind) {
