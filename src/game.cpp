@@ -258,8 +258,8 @@ int main() {
             switch (gameState) {
                 case kGameRun:
                     boardRenderer.renderTiles(board);
-                    if (tetris->isPausedForLineClear()) {
-                        boardRenderer.playLinesClearAnimation(board, tetris->lineClearPausePercent());
+                    if (tetris->isPausedForLinesClear()) {
+                        boardRenderer.playLinesClearAnimation(board, tetris->linesClearPausePercent());
                     } else {
                         boardRenderer.renderGhost(board.piece(), board.ghostRow(), board.pieceCol());
                         boardRenderer.renderPiece(board.piece(), board.pieceRow(), board.pieceCol(),

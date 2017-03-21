@@ -115,8 +115,8 @@ public:
     void hold();
     
     double lockPercent() const { return lockingTimer_ / kLockDownTimeLimit_; }
-    bool isPausedForLineClear() const { return pausedForLinesClear_; }
-    double lineClearPausePercent() const { return linesClearTimer_ / kPauseAfterLineClear_; }
+    bool isPausedForLinesClear() const { return pausedForLinesClear_; }
+    double linesClearPausePercent() const { return linesClearTimer_ / kPauseAfterLineClear_; }
     
     int level() const { return level_; }
     int linesCleared() const { return linesCleared_; }
