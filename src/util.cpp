@@ -101,6 +101,9 @@ std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHei
         
         characters.insert(std::make_pair(c, glyph));
     }
+
+    // Should handle face as well.
+    FT_Done_FreeType(ft);
     
     return characters;
 }
