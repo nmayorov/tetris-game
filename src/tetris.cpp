@@ -304,6 +304,9 @@ bool Board::isTileFilled(int row, int col) const {
         
 
 bool Board::isPositionPossible(int row, int col, const Piece &piece) const {
+    if (piece.kind() == kNone)
+        return false;
+    
     auto shape = piece.shape();
     int index = 0;
     for (int pieceRow = 0; pieceRow < piece.bBoxSide(); ++pieceRow) {
