@@ -59,7 +59,9 @@ Texture loadRgbaTexture(const std::string& path) {
     stbi_set_flip_vertically_on_load(1);
     int width, height, numChannels;
     GLubyte *image = stbi_load(path.c_str(), &width, &height, &numChannels, 4);
-    return Texture(GL_RGBA, width, height, image);
+    Texture texture(GL_RGBA, width, height, image);
+    stbi_image_free(image);
+    return texture;
 }
 
 
