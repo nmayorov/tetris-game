@@ -83,7 +83,7 @@ private:
 
 class TextRenderer {
 public:
-    TextRenderer(const glm::mat4& projection, const std::map<GLubyte, Glyph>& font);
+    TextRenderer(const glm::mat4& projection, const std::vector<Glyph>& font);
     
     void render(const std::string& text, GLfloat x, GLfloat y, glm::vec3 color) const;
     void renderCentered(const std::string& text, GLfloat x, GLfloat y, GLfloat width, const glm::vec3& color) const;
@@ -92,9 +92,8 @@ public:
     GLint computeHeight(const std::string& text) const;
     
 private:
-    std::map<GLubyte, Glyph> font_;
+    std::vector<Glyph> font_;
     Shader shader_;
-    
     GLuint vbo_, vao_;
 };
 

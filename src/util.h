@@ -57,7 +57,7 @@ struct Glyph {
 };
 
 
-std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHeight);
+std::vector<Glyph> loadFont(const std::string& path, unsigned int glyphHeight);
 Texture loadRgbaTexture(const std::string& path);
 
 

@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 #include <fstream>
-#include <map>
+#include <vector>
 
 #include "util.h"
 
@@ -76,7 +76,7 @@ Texture::Texture(GLenum format, GLuint width, GLuint height, GLubyte* image) : w
 }
 
 
-std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHeight) {
+std::vector<Glyph> loadFont(const std::string& path, unsigned int glyphHeight) {
     FT_Library ft;
     FT_Init_FreeType(&ft);
     
@@ -87,10 +87,10 @@ std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHei
     
     glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
     
-    std::map<GLubyte , Glyph> characters;
+    std::vector<Glyph> glyphs;
     for (GLubyte c = 0; c < 128; c++) {
         if (FT_Load_Char(face, c, FT_LOAD_RENDER)) {
-            std::cerr << "Failed to load Glyph " << c << std::endl;
+            std::cerr << "Failed to load glyph " << c << "." << std::endl;
             continue;
         }
         
@@ -98,12 +98,12 @@ std::map<GLubyte, Glyph> loadFont(const std::string& path, unsigned int glyphHei
         Glyph glyph = {texture,
                        glm::ivec2(face->glyph->bitmap_left, face->glyph->bitmap_top),
                        face->glyph->advance.x >> 6};
-        
-        characters.insert(std::make_pair(c, glyph));
+    
+        glyphs.push_back(glyph);
     }
 
     // Should handle face as well.
     FT_Done_FreeType(ft);
     
-    return characters;
+    return glyphs;
 }

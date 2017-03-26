@@ -330,7 +330,7 @@ void BoardRenderer::playLinesClearAnimation(const Board &board, double percentFi
 }
 
 
-TextRenderer::TextRenderer(const glm::mat4& projection, const std::map<GLubyte, Glyph>& font) :
+TextRenderer::TextRenderer(const glm::mat4& projection, const std::vector<Glyph>& font) :
         font_(font), shader_(kGlyphVertexShader, kGlyphFragmentShader) {
     shader_.use();
     shader_.setMat4("projection", projection);
