@@ -148,13 +148,13 @@ int main() {
     
     auto font = loadFont("resources/kenvector_future.ttf", kFontSize);    
     
-	std::map<TileColor, Texture> tileTextures, ghostTextures;
+	std::vector<Texture> tileTextures, ghostTextures;
     std::vector<std::string> colors = {"cyan", "blue", "orange", "yellow", "green", "purple", "red"};
     for (int color = kCyan; color <= kRed; ++color) {
         std::string path = "resources/tile_" + colors[color] + ".png";
-        tileTextures.insert(std::make_pair(static_cast<TileColor>(color), loadRgbaTexture(path)));
+        tileTextures.push_back(loadRgbaTexture(path));
         path = "resources/contour_" + colors[color] + ".png";
-        ghostTextures.insert(std::make_pair(static_cast<TileColor>(color), loadRgbaTexture(path)));
+        ghostTextures.push_back(loadRgbaTexture(path));
     }
     
     Texture keyArrowLeft = loadRgbaTexture("resources/Keyboard_White_Arrow_Left.png");

@@ -205,7 +205,7 @@ const glm::vec3 kGridColor(0.2, 0.2, 0.2);
 
 
 BoardRenderer::BoardRenderer(const glm::mat4& projection, GLfloat tileSize, GLfloat x, GLfloat y,
-                             int nRows, int nCols, const std::map<TileColor, Texture>& tileTextures,
+                             int nRows, int nCols, const std::vector<Texture>& tileTextures,
                              SpriteRenderer &spriteRenderer, PieceRenderer &pieceRenderer, PieceRenderer &ghostRenderer)
         : tileSize_(tileSize),
           x_(x), y_(y),

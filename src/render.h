@@ -2,7 +2,6 @@
 #define TETRIS_RENDER_H
 
 #include <iostream>
-#include <map>
 #include <vector>
 
 #if defined(__APPLE__)
@@ -38,7 +37,7 @@ private:
 
 class PieceRenderer {
 public:
-    PieceRenderer(GLfloat tileSize, const std::map<TileColor, Texture>& textures, SpriteRenderer& spriteRenderer)
+    PieceRenderer(GLfloat tileSize, const std::vector<Texture>& textures, SpriteRenderer& spriteRenderer)
             : tileSize_(tileSize), textures_(textures), spriteRenderer_(spriteRenderer)  {}
     
     void renderShape(const Piece &piece, GLfloat x, GLfloat y, GLfloat mixCoeff = 0,
@@ -48,7 +47,7 @@ public:
 
 private:
     GLfloat tileSize_;
-    std::map<TileColor, Texture> textures_;
+    std::vector<Texture> textures_;
     SpriteRenderer& spriteRenderer_;
 };
 
@@ -56,7 +55,7 @@ private:
 class BoardRenderer {
 public:
     BoardRenderer(const glm::mat4& projection, GLfloat tileSize, GLfloat x, GLfloat y,
-                  int nRows, int nCols, const std::map<TileColor, Texture>& tileTextures,
+                  int nRows, int nCols, const std::vector<Texture>& tileTextures,
                   SpriteRenderer& spriteRenderer, PieceRenderer& pieceRenderer, PieceRenderer& ghostRenderer);
     
     void renderBackground() const;
@@ -70,7 +69,7 @@ private:
     GLfloat x_, y_;
     int nRows_, nCols_;
     
-    const std::map<TileColor, Texture> tileTextures_;
+    const std::vector<Texture> tileTextures_;
     
     PieceRenderer& pieceRenderer_, ghostRenderer_;
     SpriteRenderer& spriteRenderer_;
