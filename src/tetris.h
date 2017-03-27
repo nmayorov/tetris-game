@@ -122,7 +122,7 @@ public:
     int linesCleared() const { return linesCleared_; }
     int score() const { return score_; }
     Piece nextPiece() const { return Piece(bag_[nextPiece_]); }
-    Piece heldPiece() const { return heldPiece_; }
+    Piece heldPiece() const { return Piece(heldPiece_); }
     
 private:
     static const int kLinesToClearPerLevel_;
@@ -144,7 +144,7 @@ private:
     std::vector<PieceKind> bag_;
     int nextPiece_;
     
-    Piece heldPiece_;
+    PieceKind heldPiece_;
     bool canHold_;
     
     int level_;

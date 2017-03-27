@@ -411,7 +411,7 @@ void Tetris::restart(int level) {
     std::shuffle(bag_.begin() + kNumPieces, bag_.end(), rng_);
     
     std::uniform_int_distribution<int> holdPieceSelector(0, kNumPieces - 1);
-    heldPiece_ = Piece(bag_[holdPieceSelector(rng_)]);
+    heldPiece_ = bag_[holdPieceSelector(rng_)];
     
     spawnPiece();
 }
@@ -519,8 +519,8 @@ void Tetris::hold() {
     if (!canHold_ || pausedForLinesClear_)
         return;
     
-    Piece currentPiece = board_.piece();
-    board_.spawnPiece(heldPiece_.kind());
+    PieceKind currentPiece = board_.piece().kind();
+    board_.spawnPiece(heldPiece_);
     heldPiece_ = currentPiece;
     
     canHold_ = false;
