@@ -510,6 +510,8 @@ void Tetris::rotate(Rotation rotation) {
 
 
 void Tetris::hardDrop() {
+    if (board_.piece().kind() == kNone)
+        return;
     score_ += 2 * level_ * board_.hardDrop();
     lock();
 }
