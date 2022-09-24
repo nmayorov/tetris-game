@@ -9,8 +9,10 @@ find_package(OpenGL REQUIRED)
 find_package(freetype REQUIRED)
 
 find_package(PkgConfig REQUIRED)
-pkg_search_module(GLFW REQUIRED glfw3)
-pkg_search_module(GLM REQUIRED glm)
+if(NOT APPLE)
+    pkg_search_module(GLFW REQUIRED glfw3)
+    pkg_search_module(GLM REQUIRED glm)
+endif(APPLE)
 
 include_directories(${GLFW_INCLUDE_DIRS})
 include_directories(${FREETYPE_INCLUDE_DIRS})
@@ -29,3 +31,11 @@ set(SOURCE_FILES
 
 add_executable(tetris ${SOURCE_FILES})
 target_link_libraries(tetris ${OPENGL_gl_LIBRARY} ${GLFW_LIBRARIES} ${FREETYPE_LIBRARIES})
+
+if(APPLE)
+    find_package(glfw3 CONFIG REQUIRED)
+    find_package(glm CONFIG REQUIRED) 
+   	target_link_libraries(tetris glfw)
+	target_link_libraries(tetris glm::glm)
+endif(APPLE)
+
