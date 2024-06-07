@@ -55,12 +55,8 @@ GLFWwindow* setupGlContext() {
     if (window == nullptr)
         glfwTerminate();
 
-	glfwMakeContextCurrent(window);
-
-#if defined(WIN32)
-	glewExperimental = GL_TRUE;
-	glewInit();
-#endif
+    glfwMakeContextCurrent(window);
+    glewInit();
 
     return window;
 }

@@ -17,9 +17,14 @@ The game initialization and main loop is implemented in `game.cpp` in the most s
 
 Building
 --------
-There is a project for Visual Studio 2017 in `vs2017_project` which contains all necessary dependencies. 
+Building was reworked and tested for Ubuntu 20.04. 
+It's too much hassle to properly support all platforms because of peculiar dependency libraries.
 
-On OS X you should install `GLFW3`, `GLM` and `freetype2` with `homebrew` . Then use `cmake` to generate a makefile. Linux building wasn't tested.
+Install required packages:
+```shell
+sudo apt-get install libglew-dev libfreetype-dev libglfw3-dev libglm-dev libopengl-dev
+```
+Then use CMake to generate and execute build. 
 
 Make sure that `resources` folder is near the executable before running.
 
@@ -30,4 +35,4 @@ http://learnopengl.com was amazingly helpful to learn basics of OpenGL. Some uti
 
 Tile sprites and font by kenney.nl.
 
-Keyboard key sprites by Xelu. 
+Keyboard key sprites by Xelu.
