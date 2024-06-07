@@ -1,6 +1,6 @@
-#include <map>
 #include <string>
 #include <vector>
+#include <thread>
 #include <glm/gtc/matrix_transform.hpp>
 #include "render.h"
 
@@ -190,17 +190,14 @@ int main() {
     
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
-    
+
+        std::this_thread::sleep_for(std::chrono::duration<double>(timeLastGameUpdate + kGameTimeStep - glfwGetTime()));
         if (gameState == kGameRun) {
-            double time = glfwGetTime();
-            if (time - timeLastGameUpdate >= kGameTimeStep) {
-                timeLastGameUpdate = time;
-                tetris->update(softDrop, moveRight, moveLeft);
-            }
-            
+            tetris->update(softDrop, moveRight, moveLeft);
             if (tetris->isGameOver())
                 gameState = kGameOver;
         }
+        timeLastGameUpdate = glfwGetTime();
         
         double time = glfwGetTime();
         if (time - timeLastRender >= kSecondsPerFrame) {
