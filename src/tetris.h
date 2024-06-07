@@ -84,8 +84,9 @@ private:
     std::vector<TileColor> tiles_;
 
     Piece piece_;
-    int row_, col_;
-    int ghostRow_;
+    int row_ = 0;
+    int col_ = 0;
+    int ghostRow_ = 0;
 
     std::vector<TileColor> tilesAfterClear_;
     std::vector<int> linesToClear_;
@@ -131,7 +132,7 @@ private:
 
     Board& board_;
 
-    bool gameOver_;
+    bool gameOver_ = false;
 
     double timeStep_;
 
@@ -166,8 +167,6 @@ private:
     void lock();
     void spawnPiece();
     void updateScore(int linesCleared);
-
-    double secondsPerLineForLevel(int level) const { return std::pow(0.8 - (level - 1) * 0.007, level - 1); }
 };
 
 #endif  // TETRIS_TETRIS_H

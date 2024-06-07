@@ -1,6 +1,5 @@
+#include <cmath>
 #include "render.h"
-#define _USE_MATH_DEFINES
-#include <math.h>
 
 const char* kColoredPrimitiveVertexShader = R"glsl(
 # version 330 core
@@ -377,7 +376,7 @@ GLint TextRenderer::computeHeight(const std::string& text) const {
     GLint height = 0;
     for (char c : text) {
         Glyph glyph = font_.at(c);
-        GLint textureHeight = static_cast<GLint>(glyph.texture.height);
+        auto textureHeight = static_cast<GLint>(glyph.texture.height);
         height = std::max(height, font_.at('H').bearing.y - glyph.bearing.y + textureHeight);
     }
     return height;

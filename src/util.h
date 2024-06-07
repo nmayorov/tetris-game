@@ -14,7 +14,7 @@ public:
     void bind() const { glBindTexture(GL_TEXTURE_2D, id_); }
 
 private:
-    GLuint id_;
+    GLuint id_ = 0;
 };
 
 class Shader {

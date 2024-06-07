@@ -17,14 +17,14 @@ extern const glm::vec3 kColorWhite;
 
 class SpriteRenderer {
 public:
-    SpriteRenderer(const glm::mat4& projection);
+    explicit SpriteRenderer(const glm::mat4& projection);
 
     void render(const Texture& texture, GLfloat x, GLfloat y, GLfloat width, GLfloat height, GLfloat mixCoeff = 0,
                 const glm::vec3& mixColor = kColorBlack, GLfloat alphaMultiplier = 1);
 
 private:
     Shader shader_;
-    GLuint vao_;
+    GLuint vao_ = 0;
 };
 
 class PieceRenderer {
@@ -67,7 +67,7 @@ private:
 
     Shader backgroundShader_;
     std::vector<GLfloat> verticesBackground_;
-    GLuint vaoBackground_;
+    GLuint vaoBackground_ = 0;
 };
 
 class TextRenderer {
@@ -83,7 +83,8 @@ public:
 private:
     std::vector<Glyph> font_;
     Shader shader_;
-    GLuint vbo_, vao_;
+    GLuint vao_ = 0;
+    GLuint vbo_ = 0;
 };
 
 #endif  // TETRIS_RENDER_H

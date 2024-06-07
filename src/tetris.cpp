@@ -340,6 +340,12 @@ Tetris::Tetris(Board& board, double timeStep, unsigned int randomSeed)
     restart(1);
 }
 
+
+static double secondsPerLineForLevel(int level) {
+    return std::pow(0.8 - (level - 1) * 0.007, level - 1);
+}
+
+
 void Tetris::restart(int level) {
     board_.clear();
     gameOver_ = false;

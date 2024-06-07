@@ -209,17 +209,17 @@ int main() {
 
             GLfloat y = 0.6f * kHeight;
             textRenderer.renderCentered("LEVEL", kHudX, y, kHudWidth, kColorBlack);
-            y += 1.4 * letterHeight;
+            y += 1.4f * letterHeight;
             textRenderer.renderCentered(std::to_string(level), kHudX, y, kHudWidth, kColorBlack);
 
-            y += 2.5 * letterHeight;
+            y += 2.5f * letterHeight;
             textRenderer.renderCentered("LINES", kHudX, y, kHudWidth, kColorBlack);
-            y += 1.4 * letterHeight;
+            y += 1.4f * letterHeight;
             textRenderer.renderCentered(std::to_string(linesCleared), kHudX, y, kHudWidth, kColorBlack);
 
-            y += 2.5 * letterHeight;
+            y += 2.5f * letterHeight;
             textRenderer.renderCentered("SCORE", kHudX, y, kHudWidth, kColorBlack);
-            y += 1.4 * letterHeight;
+            y += 1.4f * letterHeight;
             textRenderer.renderCentered(std::to_string(score), kHudX, y, kHudWidth, kColorBlack);
 
             boardRenderer.renderBackground();
@@ -250,7 +250,7 @@ int main() {
                 textRenderer.render("CONTINUE", xName, y, kColorWhite);
                 spriteRenderer.render(keyEsc, xIcon - keyEsc.width, y - dyAlignment, keyEsc.width, keyEsc.height);
 
-                y += 5.5 * letterHeight;
+                y += 5.5f * letterHeight;
                 textRenderer.render("START SCREEN", xName, y, kColorWhite);
                 dyAlignment = 0.75f * (keyEnter.height - letterHeight);
                 spriteRenderer.render(keyEnter, xIcon - keyEnter.width, y - dyAlignment, keyEnter.width,
