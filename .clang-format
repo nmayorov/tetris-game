@@ -1,0 +1,13 @@
+BasedOnStyle: Google
+IndentWidth: 4
+ColumnLimit: 120
+IndentCaseLabels: false
+AllowShortCaseLabelsOnASingleLine: true
+SpaceAfterCStyleCast: true
+SortIncludes: Never
+AccessModifierOffset: -4
+BreakConstructorInitializers: BeforeComma
+SpaceBeforeCpp11BracedList: true
+DerivePointerAlignment: false
+PointerAlignment: Left
+InsertBraces: true
