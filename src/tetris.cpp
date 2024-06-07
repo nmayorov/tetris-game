@@ -162,13 +162,14 @@ void Piece::rotate(Rotation rotation) {
 }
 
 
-const std::vector<std::pair<int, int>> Piece::kicks(Rotation rotation) const {
+const std::vector<std::pair<int, int>>& Piece::kicks(Rotation rotation) const {
     switch (rotation) {
         case Rotation::kRight:
             return kicksRight_[state_];
         case Rotation::kLeft:
             return kicksLeft_[state_];
     }
+    throw std::runtime_error("This line is unreachable!");
 }
 
 

@@ -30,7 +30,7 @@ public:
     const std::vector<TileColor>& initialShape() const { return initialShape_; }
     
     void rotate(Rotation rotation);
-    const std::vector<std::pair<int, int>> kicks(Rotation rotation) const;
+    const std::vector<std::pair<int, int>>& kicks(Rotation rotation) const;
     
 private:
     static const int kNumStates_;

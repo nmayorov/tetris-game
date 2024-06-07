@@ -62,7 +62,7 @@ GLFWwindow* setupGlContext() {
 }
 
 
-void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods) {
+void keyCallback(GLFWwindow */*window*/, int key, int /*scancode*/, int action, int /*mods*/) {
     switch (gameState) {
         case kGameRun:
             if (action == GLFW_PRESS) {
@@ -130,7 +130,7 @@ void keyCallback(GLFWwindow *window, int key, int scancode, int action, int mods
 }
 
 
-void windowFocusCallback(GLFWwindow* window, int focused) {
+void windowFocusCallback(GLFWwindow* /*window*/, int focused) {
     if (!focused && gameState == kGameRun)
         gameState = kGamePaused;
 }
